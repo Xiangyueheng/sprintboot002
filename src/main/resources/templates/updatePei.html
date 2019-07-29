@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>项目信息维护</h1>
+    <form action="/c/pei/update" method="post">
+        <input type="hidden" name="itemid" th:value="${pei.itemid}">
+        项目名称：<input type="text" th:value="${pei.itemname}" name="itemname"><br>
+        所属类别：<select name="typeid">
+            <span th:each="obj:${list}">
+                <option th:if="${pei.typeid==obj.typeid}" selected="selected" th:value="${obj.typeid}">[[${obj.typename}]]</option>
+                <option th:if="${pei.typeid!=obj.typeid}" th:value="${obj.typeid}">[[${obj.typename}]]</option>
+            </span>
+    </select><br>
+        是否必查：<span th:switch="${pei.necessary}">
+        <input th:case="0" type="checkbox" th:value="${pei.necessary}" name="necessary">
+        <input th:case="1" type="checkbox" checked="checked" th:value="${pei.necessary}" name="necessary">
+    </span><br>
+        参考值：<input type="text" th:value="${pei.ref}" name="ref"><br>
+        价格：<input type="text" th:value="${pei.price}" name="price"><br>
+        说明:<textarea cols="10" rows="3" name="info">[[${pei.info}]]</textarea><br>
+        <input type="submit" value="修改"><input type="button" value="重置"><input type="button" value="取消">
+    </form>
+</body>
+</html>

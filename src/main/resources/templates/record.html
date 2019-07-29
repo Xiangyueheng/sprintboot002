@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a th:href="@{/c//stu/addtz}">新增</a>
+<table>
+    <thead>
+    <th>序号</th>
+    <th>奖罚</th>
+    <th>学生姓名</th>
+    <th>创建人</th>
+    <th>创建时间</th>
+    <th>操作</th>
+    </thead>
+    <tbody>
+    <tr th:each="obj,iter:${list}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${obj.name}"></td>
+        <td th:text="${obj.stucode}"></td>
+        <td th:text="${obj.createby}"></td>
+        <td th:text="${#dates.format(obj.createdate,'yyyy-MM-dd')}"></td>
+
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>

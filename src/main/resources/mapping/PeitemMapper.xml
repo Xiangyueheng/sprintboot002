@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.sprintboot002.dao.PeitemMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.sprintboot002.pojo.Peitem" >
+    <id column="itemid" property="itemid" jdbcType="INTEGER" />
+    <result column="itemname" property="itemname" jdbcType="VARCHAR" />
+    <result column="typeid" property="typeid" jdbcType="INTEGER" />
+    <result column="necessary" property="necessary" jdbcType="INTEGER" />
+    <result column="ref" property="ref" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectBytypeid" resultMap="BaseResultMap">
+    SELECT * FROM `peitems` WHERE `typeid`=#{typeid}
+  </select>
+  <sql id="Base_Column_List" >
+    itemid, itemname, typeid, necessary, ref, price, info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from peitems
+    where itemid = #{itemid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from peitems
+    where itemid = #{itemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.accp.sprintboot002.pojo.Peitem" >
+    insert into peitems (itemid, itemname, typeid, 
+      necessary, ref, price, 
+      info)
+    values (#{itemid,jdbcType=INTEGER}, #{itemname,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
+      #{necessary,jdbcType=INTEGER}, #{ref,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+      #{info,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.accp.sprintboot002.pojo.Peitem" >
+    insert into peitems
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        itemid,
+      </if>
+      <if test="itemname != null" >
+        itemname,
+      </if>
+      <if test="typeid != null" >
+        typeid,
+      </if>
+      <if test="necessary != null" >
+        necessary,
+      </if>
+      <if test="ref != null" >
+        ref,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="itemname != null" >
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="necessary != null" >
+        #{necessary,jdbcType=INTEGER},
+      </if>
+      <if test="ref != null" >
+        #{ref,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.accp.sprintboot002.pojo.Peitem" >
+    update peitems
+    <set >
+      <if test="itemname != null" >
+        itemname = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        typeid = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="necessary != null" >
+        necessary = #{necessary,jdbcType=INTEGER},
+      </if>
+      <if test="ref != null" >
+        ref = #{ref,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where itemid = #{itemid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.accp.sprintboot002.pojo.Peitem" >
+    update peitems
+    set itemname = #{itemname,jdbcType=VARCHAR},
+      typeid = #{typeid,jdbcType=INTEGER},
+      necessary = #{necessary,jdbcType=INTEGER},
+      ref = #{ref,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      info = #{info,jdbcType=VARCHAR}
+    where itemid = #{itemid,jdbcType=INTEGER}
+  </update>
+</mapper>

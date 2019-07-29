@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>体检</title>
+</head>
+<body>
+<form action="/c/pei/selallbyid">
+    <select name="typeid">
+        <span th:each="obj,iter:${list}" >
+            <option th:value="${obj.typeid}">[[${obj.typename}]]</option>
+        </span>
+    </select>
+    <input type="submit" value="查询">
+</form>
+    <table>
+        <thead>
+            <tr>
+                <td>项目名称</td>
+                <td>所属类别</td>
+                <td>是否必查</td>
+                <td>参考值</td>
+                <td>价格</td>
+                <td>说明</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <div th:if="${peilist!=null}">
+        <tbody th:remove="${peilist.size()==0?'none':'all-but-first'}">
+            <tr th:each="obj,iter:${peilist}">
+                <td th:text="${obj.itemname}"></td>
+                <td>
+                    <div th:switch="${obj.typeid}">
+                        <span th:each="item,iter:${list}">
+                            <span th:case="${item.typeid}">[[${item.typename}]]</span>
+                        </span>
+
+                    </div>
+                </td>
+                <td>
+                    <div th:switch="${obj.necessary}">
+                        <span th:case="0">非必查</span>
+                        <span th:case="1">必查</span>
+                    </div>
+                </td>
+                <td th:text="${obj.ref}"></td>
+                <td th:text="${obj.price}"></td>
+                <td th:text="${obj.info}"></td>
+                <td><a th:href="@{/c/pei/selpeibyid(id=${obj.itemid})}">修改</a></td>
+            </tr>
+            <tr>
+                <td colspan="7">没有找到数据</td>
+            </tr>
+        </tbody>
+        </div>
+    </table>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.sprintboot002.dao.ItemtypeMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.sprintboot002.pojo.Itemtype" >
+    <id column="typeid" property="typeid" jdbcType="INTEGER" />
+    <result column="typename" property="typename" jdbcType="VARCHAR" />
+    <collection property="list" select="selitem" column="typeid"></collection>
+  </resultMap>
+  <!--查询项目-->
+  <select id="selitem" resultType="com.accp.sprintboot002.pojo.Peitem">
+    SELECT * FROM `peitems` WHERE `typeid`=#{0}
+  </select>
+  <!--查询分类-->
+  <select id="selAll" resultMap="BaseResultMap">
+    SELECT * FROM `itemtypes`
+  </select>
+  <sql id="Base_Column_List" >
+    typeid, typename
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from itemtypes
+    where typeid = #{typeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from itemtypes
+    where typeid = #{typeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.accp.sprintboot002.pojo.Itemtype" >
+    insert into itemtypes (typeid, typename)
+    values (#{typeid,jdbcType=INTEGER}, #{typename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.accp.sprintboot002.pojo.Itemtype" >
+    insert into itemtypes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="typeid != null" >
+        typeid,
+      </if>
+      <if test="typename != null" >
+        typename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null" >
+        #{typename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.accp.sprintboot002.pojo.Itemtype" >
+    update itemtypes
+    <set >
+      <if test="typename != null" >
+        typename = #{typename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where typeid = #{typeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.accp.sprintboot002.pojo.Itemtype" >
+    update itemtypes
+    set typename = #{typename,jdbcType=VARCHAR}
+    where typeid = #{typeid,jdbcType=INTEGER}
+  </update>
+</mapper>

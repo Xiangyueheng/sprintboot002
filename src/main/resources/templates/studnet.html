@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+    <table>
+        <thead>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>职务</th>
+            <th>专业</th>
+            <th>班级</th>
+            <th>性别</th>
+            <th>生日</th>
+            <th>电话</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+           <tr th:each="obj,iter:${student.list}">
+               <td th:text="${obj.code}"></td>
+               <td th:text="${obj.name}"></td>
+               <td>
+                   <div th:switch="${obj.job}">
+                       <span th:case="1">普通学生</span>
+                       <span th:case="2">组长</span>
+                       <span th:case="3">班长</span>
+                   </div>
+               </td>
+               <td>
+                   <div th:switch="${obj.major}">
+                       <span th:case="1">计算机</span>
+                       <span th:case="2">电气</span>
+                       <span th:case="3">金融</span>
+                   </div>
+               </td>
+               <td th:text="${obj.grade}"></td>
+               <td>
+                   <div th:switch="${obj.sex}">
+                       <span th:case="1">男</span>
+                       <span th:case="2">女</span>
+                   </div>
+               </td>
+               <td th:text="${#dates.format(obj.birthday,'yyyy-MM-dd')}"></td>
+               <td th:text="${obj.tel}"></td>
+               <td><a href="#" class="sela">查看</a></td>
+           </tr>
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><a href="/c/stu/selall?page=1">首页</a></td>
+                <td th:if="${student.hasPreviousPage==true}"><a th:href="@{/c/stu/selall(page=${student.prePage})}">上一页</a></td>
+                <td th:if="${student.hasNextPage==true}"><a th:href="@{/c/stu/selall(page=${student.nextPage})}">下一页</a></td>
+                <td><a th:href="@{/c/stu/selall(page=${student.lastPage})}">尾页</a></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+<script th:src="@{/js/jquery-1.12.4.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/superDialog.js}"></script>
+<script>
+    $(".sela").click(function () {
+        var code=$(this).parents("tr").find("td:eq(0)").text();
+
+        showWindowDialog("/c/record/selbycode?code="+code,"详情")
+    })
+</script>
+</html>

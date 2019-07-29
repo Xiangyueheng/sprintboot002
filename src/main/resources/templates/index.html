@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>学生奖惩管理系统|欢迎您：<span th:if="${session.user!=null}">[[${session.user.name}]]</span></p>
+    <div><a href="#" id="stu">学生列表</a><a href="#" id="rec"> 奖罚管理</a><a href="#"> 退出系统</a></div>
+    <iframe src="/c/stu/selall?page=1" id="ifr" height="500" width="800"></iframe>
+</body>
+<script th:src="@{/js/jquery-1.12.4.js}"></script>
+<script>
+    $("#stu").click(function () {
+        $("#ifr").attr("src","/c/stu/selall?page=1");
+    })
+
+    $("#rec").click(function () {
+        $("#ifr").attr("src","/c/record/selall");
+    })
+</script>
+</html>
